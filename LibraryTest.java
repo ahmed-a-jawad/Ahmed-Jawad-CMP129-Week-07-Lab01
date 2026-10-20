@@ -31,10 +31,6 @@ public class LibraryTest {
         lib.returnBook("1999", "400"); //Attempt an operation using an invalid membership ID.
         lib.displayBooks();
         lib.displayMembers();
-        member.displayInfo();
-
-/*
-Display the final book availability and member borrowing records.
-*/
+        member.displayInfo();   //Display the final book availability and member borrowing records.
     }
 }
