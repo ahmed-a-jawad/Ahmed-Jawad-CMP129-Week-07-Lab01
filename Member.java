@@ -34,12 +34,14 @@ public class Member {
     public boolean borrowBook(Book book){
         if (book.getAvailability()==true){
             System.out.println("Successfully borrowed Book " + book.getIsbn());
+            System.out.println();
             borrowedBooks.add(book);
             book.setAvailability(false);
             return true;
         }
         else{
             System.out.println("Cannot borrow Book " + book.getIsbn());
+            System.out.println();
             return false;
         }
 
@@ -49,16 +51,19 @@ public class Member {
         // Return true when the operation succeeds. Return false when the book is unavailable.
 
     public boolean returnBook(Book book){
-        if (borrowBook(book)==false){
-            System.out.println("Returned book " + book.getIsbn());
-            borrowedBooks.remove(book);
-            book.setAvailability(true);
-            return true;
-        }
-        else{
-            System.out.println("Cannot return book " + book.getIsbn());
-            return false;
-        }
+        for(int i = 0; i< borrowedBooks.size(); i++){
+            if (borrowedBooks.get(i).getIsbn().equals(book.getIsbn())){
+                borrowedBooks.remove(i);          //removes from members list
+                book.setAvailability(true);       //makes it available again
+                System.out.println("Returned book " + book.getIsbn());
+                System.out.println();
+                return true;
+            }
+        }  
+        
+        System.out.println("Cannot return book " + book.getIsbn());
+        System.out.println();
+        return false;
         //verify book was borrowed, remove from list, change avail to true, return value if success
     }
 
@@ -66,5 +71,13 @@ public class Member {
         //return members borrowed books
         System.out.println("Name: " + name);
         System.out.println("Membership ID: " + membershipId);
+        if(borrowedBooks.size()==0)
+            System.out.println("No books checked out.");
+        else{
+            for(int i=0; i < borrowedBooks.size(); i++){
+                System.out.println(borrowedBooks.get(i).getTitle() + " ISBN: " + borrowedBooks.get(i).getIsbn());
+            }
+        }
+        System.out.println();
     }
 }

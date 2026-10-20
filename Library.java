@@ -2,8 +2,8 @@ import java.util.ArrayList;
 public class Library {
     
     private String name;
-    ArrayList<Book> books = new ArrayList<Book>();
-    ArrayList<Member> members = new ArrayList<Member>();
+    private ArrayList<Book> books = new ArrayList<Book>();
+    private ArrayList<Member> members = new ArrayList<Member>();
 
     public Library(String name){
         this.name = name;
@@ -39,29 +39,49 @@ public class Library {
     }
 
     public boolean borrowBook(String membershipId, String isbn){
-        for(int i=0; i < books.size(); i++){
-            if(members.get(i).getMembershipId().equals(membershipId) && books.get(i).getIsbn().equals(isbn))
-                return true;
-
-            }
-        return false;
+        Member member = findMemberById(membershipId);
+        Book book = findBookByIsbn(isbn);
+        if(member == null){
+            System.out.println("Member " + membershipId + " doesn't exist.");
+            return false;
+        }
+        if(book == null){
+            System.out.println("Book " + isbn + " doesn't exist.");
+            return false;
+        }
+        return member.borrowBook(book);
     }
 
     public boolean returnBook(String membershipId, String isbn){
-        for(int i=0; i < books.size(); i++){
-            if(members.get(i).getMembershipId().equals(membershipId) && books.get(i).getIsbn().equals(isbn))
-                return true;
+        Member member = findMemberById(membershipId);
+        Book book = findBookByIsbn(isbn);
 
+        if(member == null){
+            System.out.println("Member " + membershipId + " not found");
+            return false;
         }
-        return false;
+        if (book == null){
+            System.out.println("Book " + isbn + " not found");
+            return false;
+        }
+        return member.returnBook(book);
     }
 
     public void displayBooks(){
-        System.out.println(books);
+        System.out.println("Books in " + name + ": ");
+        for(int i=0; i < books.size(); i++){
+            System.out.println(books.get(i).getTitle() + " ISBN: " + books.get(i).getIsbn());
+        }
+        
+        System.out.println();
     }
 
     public void displayMembers(){
-        System.out.println(members+ " " + name);
+        System.out.println("Members in " + name + ": ");
+        for(int i=0; i < members.size(); i++){
+                System.out.println(members.get(i).getName() + " ID: " + members.get(i).getMembershipId());
+        }
         
+        System.out.println();
     }
 }
