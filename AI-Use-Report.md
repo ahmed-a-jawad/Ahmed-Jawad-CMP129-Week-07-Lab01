@@ -4,7 +4,7 @@
 
 - Student name: Jawad Ahmed
 - Week: 7
-- Lab: 2
+- Lab: 1
 - Date: 10/20/2026
 
 ## AI Use
